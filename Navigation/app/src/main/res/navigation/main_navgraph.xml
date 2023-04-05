@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navgraph"
+    app:startDestination="@id/screen1">
+
+    <fragment
+        android:id="@+id/screen1"
+        android:name="com.suka.navigation.fragments.Screen1"
+        android:label="fragment_screen1"
+        tools:layout="@layout/fragment_screen1" >
+        <action
+            android:id="@+id/action_screen1_to_screen2"
+            app:destination="@id/screen2" />
+    </fragment>
+    <fragment
+        android:id="@+id/screen2"
+        android:name="com.suka.navigation.fragments.Screen2"
+        android:label="fragment_screen2"
+        tools:layout="@layout/fragment_screen2" />
+</navigation>
