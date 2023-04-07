@@ -20,10 +20,10 @@ class MainActivity : AppCompatActivity() {
         Log.d("MainActivity", newUser.saludar())
 
         // agrego items a la lista
-        users.add(User("Pepito1","Perez","@asd","pass"))
-        users.add(User("Pepito2","Perez","@asd","pass"))
-        users.add(User("Pepito3","Perez","@asd","pass"))
-        users.add(User("Pepito4","Perez","@asd","pass"))
+        users.add(User("user1","Perez","@asd","pass1"))
+        users.add(User("user2","Perez","@asd","pass2"))
+        users.add(User("user3","Perez","@asd","pass3"))
+        users.add(User("user4","Perez","@asd","pass4"))
 
         users.forEach{ currentUser ->
             Log.d("MainActivity", currentUser.saludar())

@@ -7,31 +7,56 @@
     android:layout_height="match_parent"
     tools:context=".fragments.Screen1">
 
+    <EditText
+        android:id="@+id/input_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:ems="10"
+        android:hint="password"
+        android:inputType="textPassword"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/txtLabel"
+        app:layout_constraintStart_toStartOf="@+id/txtLabel"
+        app:layout_constraintTop_toBottomOf="@+id/input_user" />
+
+    <EditText
+        android:id="@+id/input_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:ems="10"
+        android:hint="username"
+        android:inputType="textPersonName"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/txtLabel"
+        app:layout_constraintStart_toStartOf="@+id/txtLabel"
+        app:layout_constraintTop_toBottomOf="@+id/txtLabel" />
+
     <TextView
         android:id="@+id/txtLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Screen 1"
-        android:textSize="34sp"
-        tools:layout_editor_absoluteX="140dp"
-        tools:layout_editor_absoluteY="230dp" />
+        android:text="Screen Login"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.007" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="242dp"
+        android:layout_height="110dp"
         android:text="Go to Screen 2"
-        tools:layout_editor_absoluteX="127dp"
-        tools:layout_editor_absoluteY="341dp" />
-
-    <EditText
-        android:id="@+id/input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="109dp" />
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/txtLabel"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="@+id/txtLabel"
+        app:layout_constraintTop_toBottomOf="@+id/input_pass"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
