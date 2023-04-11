@@ -56,7 +56,7 @@ class Screen1 : Fragment() {
 
             val user_match = users.find { it.email==user && it.password==pass }
             if ( user_match != null ) {
-                val action = Screen1Directions.actionScreen1ToScreen2()
+                val action = Screen1Directions.actionScreen1ToScreen2("mi string", user_match)
 
                 findNavController().navigate(action)
             }

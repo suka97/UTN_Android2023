@@ -18,5 +18,12 @@
         android:id="@+id/screen2"
         android:name="com.suka.navigation.fragments.Screen2"
         android:label="fragment_screen2"
-        tools:layout="@layout/fragment_screen2" />
+        tools:layout="@layout/fragment_screen2" >
+        <argument
+            android:name="textArg"
+            app:argType="string" />
+        <argument
+            android:name="user"
+            app:argType="com.suka.navigation.entities.User" />
+    </fragment>
 </navigation>
