@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navgraph"
+    app:startDestination="@id/playerDashboard">
+
+    <fragment
+        android:id="@+id/playerDashboard"
+        android:name="com.suka.playerapp.fragments.PlayerDashboard"
+        android:label="fragment_player_dashboard"
+        tools:layout="@layout/fragment_player_dashboard" >
+        <action
+            android:id="@+id/action_playerDashboard_to_playerDetail"
+            app:destination="@id/playerDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/playerDetail"
+        android:name="com.suka.playerapp.fragments.PlayerDetail"
+        android:label="fragment_player_detail"
+        tools:layout="@layout/fragment_player_detail" >
+        <argument
+            android:name="player"
+            app:argType="com.suka.playerapp.entities.Player" />
+    </fragment>
+</navigation>
