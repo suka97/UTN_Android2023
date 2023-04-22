@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.ItemDetailFragment" >
+
+    <EditText
+        android:id="@+id/txtName_det"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:fontFamily="sans-serif-condensed"
+        android:hint="Nombre"
+        android:inputType="textPersonName"
+        android:text="Aceite de Oliva"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toStartOf="@+id/txtAmount_det"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtAmount_det"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:fontFamily="sans-serif-condensed"
+        android:inputType="number"
+        android:text="10 kg"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtPrice_det"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:fontFamily="sans-serif-condensed"
+        android:inputType="number"
+        android:text="$1,200.00"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@id/txtAmount_det"
+        app:layout_constraintStart_toStartOf="@id/txtAmount_det"
+        app:layout_constraintTop_toBottomOf="@+id/txtAmount_det" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
