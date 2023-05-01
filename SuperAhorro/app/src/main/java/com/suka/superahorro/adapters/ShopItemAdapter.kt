@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.suka.superahorro.R
 import com.suka.superahorro.entities.ShopItem
-import java.text.NumberFormat
+import com.suka.superahorro.packages.toCurrency
 
 class ShopItemAdapter (
     var shopItemsList:MutableList<ShopItem>,
@@ -38,22 +38,33 @@ class ShopItemAdapter (
             }
         }
 
-        fun setName (name: String) {
+        fun setName (name: String?) {
             var txtName : TextView = view.findViewById(R.id.txtName_item)
             txtName.text = name
         }
 
-        fun setPrice (price: Number) {
+        fun setPrice (price: Float?) {
             var txtPrice : TextView = view.findViewById(R.id.txtPrice_item)
-            val formatter = NumberFormat.getCurrencyInstance()
-            txtPrice.text = formatter.format(price)
+            txtPrice.text = price.toCurrency()
         }
 
-        fun setAmount (amount: Number) {
+        fun setAmount (amount: Float?) {
             var txtAmount : TextView = view.findViewById(R.id.txtAmount_item)
             txtAmount.text = amount.toString()
         }
 
+    }
+
+    fun getItemTotal(): Float {
+        var total: Float = 0F
+        shopItemsList.forEach {
+            total += it.total_prince?:0F
+        }
+        return total
+    }
+
+    fun getCartDescription(): String {
+        return "Lista: $itemCount, Total: ${getItemTotal().toCurrency()}"
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerHolder {
@@ -66,9 +77,9 @@ class ShopItemAdapter (
     }
 
     override fun onBindViewHolder(holder: PlayerHolder, position: Int) {
-        holder.setPicture(shopItemsList[position].picture_url)
+        holder.setPicture(shopItemsList[position].picture)
         holder.setName(shopItemsList[position].name)
-        holder.setPrice(shopItemsList[position].price)
+        holder.setPrice(shopItemsList[position].unit_price)
         holder.setAmount(shopItemsList[position].amount)
         holder.getCard().setOnClickListener() {
             onItemClick(position)

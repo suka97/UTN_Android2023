@@ -20,8 +20,8 @@
         android:label="fragment_item_detail"
         tools:layout="@layout/fragment_item_detail" >
         <argument
-            android:name="item"
-            app:argType="com.suka.superahorro.entities.ShopItem" />
+            android:name="itemID"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/userFragment"

@@ -7,8 +7,32 @@
     android:layout_height="match_parent"
     tools:context=".fragments.CartFragment">
 
+    <Button
+        android:id="@+id/btCardAdd"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:text="+"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtCartTotal"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="Lista: 16 items, Total: $10,500.00"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/btCardAdd"
+        app:layout_constraintEnd_toStartOf="@+id/btCardAdd"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recShopItems"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btCardAdd" />
 </androidx.constraintlayout.widget.ConstraintLayout>
