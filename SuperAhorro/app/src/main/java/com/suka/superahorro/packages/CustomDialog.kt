@@ -13,10 +13,10 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat.getSystemService
 import com.suka.superahorro.R
-import com.suka.superahorro.activities.MainActivity
+import com.suka.superahorro.packages.*
 
 
-fun createInputDialog(dialog: Dialog, desc: String, value: Any, onOkClicked: ()->Unit ) {
+fun createInputDialog(dialog: Dialog, desc: String, value: Any, onOkClicked: (String)->Unit ) {
     dialog.setContentView(R.layout.dialog_edit)
     dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
@@ -25,15 +25,17 @@ fun createInputDialog(dialog: Dialog, desc: String, value: Any, onOkClicked: ()-
     val input : EditText = dialog.findViewById(R.id.inputDialogEdit)
     val txtDesc: TextView = dialog.findViewById(R.id.txtDialogEdit)
 
-    input.setText(value?.toString() ?: "")
-    if ( value is String ) {
-        input.inputType = InputType.TYPE_CLASS_TEXT
+    when (value) {
+        is String -> input.setText(value)
+        is UnitValue -> input.setText(value.value?.toString() ?: "")
+        else -> input.setText(value.toString())
     }
+    if ( value is String ) input.inputType = InputType.TYPE_CLASS_TEXT
 
     txtDesc.text = desc
 
     btOk.setOnClickListener{
-        onOkClicked()
+        onOkClicked(input.text.toString())
         dialog.dismiss()
     }
     btCancel.setOnClickListener{

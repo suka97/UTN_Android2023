@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.suka.superahorro.entities.ShopItem
+import com.suka.superahorro.entities.CartItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,16 +20,24 @@ class StartingCartItems(private val context: Context) : RoomDatabase.Callback() 
         }
     }
 
+    override fun onDestructiveMigration(db: SupportSQLiteDatabase) {
+        super.onDestructiveMigration(db)
+        CoroutineScope(Dispatchers.IO).launch {
+            Log.d("StartingCartItems", "Re-populating database...")
+            fillWithStartingCartItems(context)
+        }
+    }
+
     /**
      * Pre-populate database with hard-coded users
      */
     private fun fillWithStartingCartItems(context: Context) {
         val items = listOf(
-            ShopItem(0, "Manteca"),
-            ShopItem(0, "Aceite de Oliva"),
-            ShopItem(0, "Papel Higienico"),
+            CartItem("Manteca"),
+            CartItem("Aceite de Oliva"),
+            CartItem("Papel Higienico"),
         )
-        val dao = AppDatabase.getInstance(context)?.shopItemDao()
+        val dao = AppDatabase.getInstance(context)?.cartItemDao()
 
         items.forEach {
             dao?.insertCartItem(it)

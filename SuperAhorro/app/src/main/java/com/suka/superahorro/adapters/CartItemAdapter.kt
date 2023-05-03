@@ -4,18 +4,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.suka.superahorro.R
-import com.suka.superahorro.entities.ShopItem
-import com.suka.superahorro.packages.toCurrency
+import com.suka.superahorro.entities.CartItem
+import com.suka.superahorro.packages.*
 
-class ShopItemAdapter (
-    var shopItemsList:MutableList<ShopItem>,
-    var onItemClick : (Int) -> Unit
-) : RecyclerView.Adapter<ShopItemAdapter.PlayerHolder>() {
+class CartItemAdapter (
+    var cartItemsList:MutableList<CartItem>,
+    var onItemClick : (Int) -> Unit,
+    var onItemDelete : (Int) -> Unit
+) : RecyclerView.Adapter<CartItemAdapter.PlayerHolder>() {
     class PlayerHolder (v: View) : RecyclerView.ViewHolder(v) {
         private var view: View
         init {
@@ -45,26 +47,46 @@ class ShopItemAdapter (
 
         fun setPrice (price: Float?) {
             var txtPrice : TextView = view.findViewById(R.id.txtPrice_item)
-            txtPrice.text = price.toCurrency()
+            txtPrice.text = UnitValue(price, GLOBAL_UNIT_PRICE).toString()
         }
 
         fun setAmount (amount: Float?) {
             var txtAmount : TextView = view.findViewById(R.id.txtAmount_item)
-            txtAmount.text = amount.toString()
+            txtAmount.text = UnitValue(amount, GLOBAL_UNIT_AMOUNT).toString()
+        }
+
+        fun onCardViewLongClick (onItemClick: (Int) -> Unit) {
+            val popupMenu = PopupMenu(view.context, view)
+            popupMenu.inflate(R.menu.card_longclick_menu)
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.menuDelete -> {
+                        onItemClick(adapterPosition)
+                        true
+                    }
+                    else -> false
+                }
+            }
+            popupMenu.show()
         }
 
     }
 
     fun getItemTotal(): Float {
         var total: Float = 0F
-        shopItemsList.forEach {
+        cartItemsList.forEach {
             total += it.total_prince?:0F
         }
         return total
     }
 
+    fun updateItems(cartItemsList: MutableList<CartItem>) {
+        this.cartItemsList = cartItemsList
+        notifyDataSetChanged()
+    }
+
     fun getCartDescription(): String {
-        return "Lista: $itemCount, Total: ${getItemTotal().toCurrency()}"
+        return "Lista: $itemCount, Total: ${UnitValue(getItemTotal(), GLOBAL_UNIT_PRICE)}"
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerHolder {
@@ -73,16 +95,20 @@ class ShopItemAdapter (
     }
 
     override fun getItemCount(): Int {
-        return shopItemsList.size
+        return cartItemsList.size
     }
 
     override fun onBindViewHolder(holder: PlayerHolder, position: Int) {
-        holder.setPicture(shopItemsList[position].picture)
-        holder.setName(shopItemsList[position].name)
-        holder.setPrice(shopItemsList[position].unit_price)
-        holder.setAmount(shopItemsList[position].amount)
+        holder.setPicture(cartItemsList[position].picture)
+        holder.setName(cartItemsList[position].name)
+        holder.setPrice(cartItemsList[position].unit_price)
+        holder.setAmount(cartItemsList[position].amount)
         holder.getCard().setOnClickListener() {
             onItemClick(position)
+        }
+        holder.getCard().setOnLongClickListener() {
+            holder.onCardViewLongClick(onItemDelete)
+            true
         }
     }
 }

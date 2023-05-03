@@ -12,7 +12,7 @@ import com.suka.superahorro.R
 
 @Suppress("DEPRECATION")
 class SplashActivity : AppCompatActivity() {
-    private val SPLASH_TIMEOUT_MS : Long = 2000
+    private val SPLASH_TIMEOUT_MS : Long = 1000
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +20,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         Handler().postDelayed({
-            startActivity(Intent(this,MainActivity::class.java))
+            startActivity(Intent(this,LoginActivity::class.java))
             finish()
           }, SPLASH_TIMEOUT_MS)
     }

@@ -5,13 +5,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.suka.superahorro.entities.ShopItem
+import com.suka.superahorro.entities.CartItem
+import com.suka.superahorro.entities.User
 
-@Database(entities = [ShopItem::class], version = 2, exportSchema = false)
+@Database(entities = [CartItem::class, User::class], version = 4, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun shopItemDao(): ShopItemDao
-
+    abstract fun cartItemDao(): CartItemDao
+    abstract fun userDao(): UserDao
 
 
     companion object {
@@ -34,6 +35,7 @@ abstract class AppDatabase : RoomDatabase() {
                         "SuperAhorroDB"
                     )
                         .addCallback(StartingCartItems(context))
+                        .addCallback(StartingUsers(context))
                         .fallbackToDestructiveMigration()
                         .allowMainThreadQueries() // No es recomendable que se ejecute en el mainthread
                         .build()

@@ -1,33 +1,30 @@
 package com.suka.superahorro.fragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.suka.superahorro.R
 import com.suka.superahorro.database.AppDatabase
-import com.suka.superahorro.database.ShopItemDao
-import com.suka.superahorro.entities.ShopItem
-import com.suka.superahorro.packages.LayoutedInput
-import com.suka.superahorro.packages.toCurrency
-import java.text.NumberFormat
+import com.suka.superahorro.database.CartItemDao
+import com.suka.superahorro.entities.CartItem
+import com.suka.superahorro.packages.*
 
 class ItemDetailFragment : Fragment() {
-
     lateinit var v : View
 
     private var db: AppDatabase? = null
-    private var cartItemsDao: ShopItemDao? = null
-    lateinit var cartItem: ShopItem
+    private var cartItemsDao: CartItemDao? = null
+    lateinit var cartItem: CartItem
 
     lateinit var name : LayoutedInput
     lateinit var amount : LayoutedInput
     lateinit var price : LayoutedInput
+    lateinit var total : LayoutedInput
+    lateinit var brand : LayoutedInput
+    lateinit var sku : LayoutedInput
 
     lateinit var layout : ConstraintLayout
 
@@ -40,7 +37,7 @@ class ItemDetailFragment : Fragment() {
         val args = ItemDetailFragmentArgs.fromBundle(requireArguments())
 
         db = AppDatabase.getInstance(v.context)
-        cartItemsDao = db?.shopItemDao()
+        cartItemsDao = db?.cartItemDao()
         cartItem = cartItemsDao?.fetchCartItemById(args.itemID)!!
 
         layout = v.findViewById(R.id.layName_det)
@@ -52,9 +49,12 @@ class ItemDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        name = LayoutedInput(this, "Nombre", R.id.layName_det, R.id.txtName_det)
-        amount = LayoutedInput(this, "Cantidad", R.id.layAmout_det, R.id.txtAmount_det)
-        price = LayoutedInput(this, "Precio", R.id.layPrice_det, R.id.txtPrice_det)
+        name = LayoutedInput(this, "Nombre", ::saveChanges, R.id.txtName_det, R.id.layName_det)
+        amount = LayoutedInput(this, "Cantidad", ::saveChanges, R.id.txtAmount_det, R.id.layAmout_det)
+        price = LayoutedInput(this, "Precio", ::saveChanges, R.id.txtPrice_det, R.id.layPrice_det)
+        total = LayoutedInput(this, "Total", ::saveChanges, R.id.txtTot_det, R.id.layTot_det)
+        brand = LayoutedInput(this, "Marca", ::saveChanges, R.id.txtBrand_det, R.id.layBrand_det)
+        sku = LayoutedInput(this, "SKU", ::saveChanges, R.id.txtSku_det, R.id.laySku_det)
     }
 
 
@@ -62,8 +62,11 @@ class ItemDetailFragment : Fragment() {
         super.onStart()
 
         name.setText(cartItem.name)
-        amount.setText(cartItem.amount.toString())
-        price.setText(cartItem.unit_price.toCurrency())
+        amount.setValue(UnitValue(cartItem.amount, GLOBAL_UNIT_AMOUNT))
+        price.setValue(UnitValue(cartItem.unit_price, GLOBAL_UNIT_PRICE))
+        total.setValue(UnitValue(cartItem.total_prince, GLOBAL_UNIT_PRICE))
+        brand.setText(cartItem.brand ?: "-")
+        sku.setText(cartItem.sku ?: "-")
     }
 
     override fun onResume() {
@@ -72,6 +75,18 @@ class ItemDetailFragment : Fragment() {
         name.updateListener()
         amount.updateListener()
         price.updateListener()
+    }
+
+
+    fun saveChanges(){
+        cartItem.name = name.getText()
+        cartItem.amount = amount.getValue()?.value
+        cartItem.unit_price = price.getValue()?.value
+        cartItem.total_prince = total.getValue()?.value
+        cartItem.brand = brand.getText()
+        cartItem.sku = sku.getText()
+
+        cartItemsDao?.updateCartItem(cartItem)
     }
 
 }

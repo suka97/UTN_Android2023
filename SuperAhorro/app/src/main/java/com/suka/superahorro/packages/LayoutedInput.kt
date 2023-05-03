@@ -2,34 +2,38 @@ package com.suka.superahorro.packages
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.graphics.Color
 import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
+import com.suka.superahorro.packages.*
 
 class LayoutedInput (
     var fragment: Fragment,
     val fieldName: String,
-    val layoutID: Int,
-    val txtID: Int
+    val onChangeListener: () -> Unit,
+    txtID: Int,
+    layoutID: Int? = null,
 ){
-    var inputLayout: ConstraintLayout
+    var inputLayout: ConstraintLayout? = null
     var inputTxt: TextView
+    var unitValue: UnitValue? = null
 
     init {
         val v: View = fragment.requireView()
-        inputLayout = v.findViewById(layoutID)
+        if (layoutID != null) inputLayout = v.findViewById(layoutID)
         inputTxt = v.findViewById(txtID)
     }
 
 
     private val dialogShow: (v: View) -> Unit =  {
         val dialog = Dialog(fragment.requireContext())
-        createInputDialog(dialog, fieldName, inputTxt.text) {
+        createInputDialog(dialog, fieldName, unitValue ?: inputTxt.text) { newValue ->
+            if (unitValue != null) setValue(UnitValue(newValue.toFloat(), unitValue!!.unit))
+            else setText(newValue)
+
+            onChangeListener()
         }
     }
 
@@ -50,8 +54,8 @@ class LayoutedInput (
 
 
     fun updateListener() {
-        inputLayout.isClickable = true
-        inputLayout.setOnClickListener(dialogShow)
+        inputLayout?.isClickable = true
+        inputLayout?.setOnClickListener(dialogShow)
 //        inputLayout.setOnTouchListener(touchListener)
         inputTxt.isClickable = true
         inputTxt.setOnClickListener(dialogShow)
@@ -59,8 +63,24 @@ class LayoutedInput (
     }
 
 
-    fun setText(txt: String) {
-        inputTxt.text = txt
+    fun setValue(value: UnitValue) {
+        unitValue = value
+        inputTxt.text = unitValue.toString()
+        updateListener()
+    }
+
+    fun setText(text: String) {
+        inputTxt.text = text
+        updateListener()
+    }
+
+
+    fun getValue(): UnitValue? {
+        return unitValue
+    }
+
+    fun getText(): String {
+        return inputTxt.text.toString()
     }
 
 }
