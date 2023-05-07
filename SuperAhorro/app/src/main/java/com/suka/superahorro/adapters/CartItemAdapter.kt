@@ -75,7 +75,7 @@ class CartItemAdapter (
     fun getItemTotal(): Float {
         var total: Float = 0F
         cartItemsList.forEach {
-            total += it.total_prince?:0F
+            total += it.getTotalPrice()?:0F
         }
         return total
     }
@@ -101,7 +101,7 @@ class CartItemAdapter (
     override fun onBindViewHolder(holder: PlayerHolder, position: Int) {
         holder.setPicture(cartItemsList[position].picture)
         holder.setName(cartItemsList[position].name)
-        holder.setPrice(cartItemsList[position].unit_price)
+        holder.setPrice(cartItemsList[position].getTotalPrice())
         holder.setAmount(cartItemsList[position].amount)
         holder.getCard().setOnClickListener() {
             onItemClick(position)

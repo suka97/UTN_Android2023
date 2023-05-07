@@ -4,11 +4,13 @@ import android.content.Context
 import android.util.Log
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.suka.superahorro.R
 import com.suka.superahorro.entities.CartItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONArray
+import org.json.JSONException
 import java.io.BufferedReader
 
 class StartingCartItems(private val context: Context) : RoomDatabase.Callback() {
@@ -16,7 +18,8 @@ class StartingCartItems(private val context: Context) : RoomDatabase.Callback() 
         super.onCreate(db)
         CoroutineScope(Dispatchers.IO).launch {
             Log.d("StartingCartItems", "Pre-populating database...")
-            fillWithStartingCartItems(context)
+            //fillWithStartingCartItems(context)
+            fillWithStartingUsersFromJson(context)
         }
     }
 
@@ -24,7 +27,8 @@ class StartingCartItems(private val context: Context) : RoomDatabase.Callback() 
         super.onDestructiveMigration(db)
         CoroutineScope(Dispatchers.IO).launch {
             Log.d("StartingCartItems", "Re-populating database...")
-            fillWithStartingCartItems(context)
+            //fillWithStartingCartItems(context)
+            fillWithStartingUsersFromJson(context)
         }
     }
 
@@ -48,23 +52,23 @@ class StartingCartItems(private val context: Context) : RoomDatabase.Callback() 
      * Pre-populate database with users from a Json file
      */
     private fun fillWithStartingUsersFromJson(context: Context) {
-//        val dao = AppDatabase.getInstance(context)?.userDao()
-//
-//        try {
-//            val users = loadJSONArray(context, R.raw.users)
-//            for (i in 0 until users.length()) {
-//                val item = users.getJSONObject(i)
-//                val user = User(
-//                    id = 0,
-//                    name = item.getString("name"),
-//                    email = item.getString("email")
-//                )
-//
-//                dao?.insertUser(user)
-//            }
-//        } catch (e: JSONException) {
-//            Log.e("fillWithStartingNotes", e.toString())
-//        }
+        val dao = AppDatabase.getInstance(context)?.cartItemDao()
+
+        try {
+            val items = loadJSONArray(context, R.raw.items)
+            for (i in 0 until items.length()) {
+                val item = items.getJSONObject(i)
+                val newItem = CartItem(item.getString("name"))
+                newItem.brand = item.getString("brand")
+                newItem.unit_price = item.getDouble("price").toFloat()
+                newItem.amount = item.getDouble("amount").toFloat()
+                newItem.picture = item.getString("picture")
+
+                dao?.insertCartItem(newItem)
+            }
+        } catch (e: JSONException) {
+            Log.e("fillWithStartingNotes", e.toString())
+        }
     }
 
     /**

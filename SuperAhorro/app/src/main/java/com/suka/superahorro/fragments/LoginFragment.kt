@@ -65,6 +65,12 @@ class LoginFragment : Fragment() {
         btLogin.setOnClickListener() {
             val userMail = txtEmail.text.toString()
             val userPass = txtPass.text.toString()
+
+            if ( userMail.isEmpty() || userPass.isEmpty() ) {
+                Snackbar.make(v, "Debe completar todos los campos", Snackbar.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val user = usersDao?.fetchUserByCredentials(userMail, userPass)
             if ( user == null ) {
                 Snackbar.make(v, "Usuario o contraseña incorrectos", Snackbar.LENGTH_SHORT).show()

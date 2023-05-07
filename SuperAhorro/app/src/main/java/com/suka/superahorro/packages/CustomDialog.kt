@@ -25,11 +25,11 @@ fun createInputDialog(dialog: Dialog, desc: String, value: Any, onOkClicked: (St
     val input : EditText = dialog.findViewById(R.id.inputDialogEdit)
     val txtDesc: TextView = dialog.findViewById(R.id.txtDialogEdit)
 
-    when (value) {
-        is String -> input.setText(value)
-        is UnitValue -> input.setText(value.value?.toString() ?: "")
-        else -> input.setText(value.toString())
-    }
+//    when (value) {
+//        is String -> input.setText(value)
+//        is UnitValue -> input.setText(value.value?.toString() ?: "")
+//        else -> input.setText(value.toString())
+//    }
     if ( value is String ) input.inputType = InputType.TYPE_CLASS_TEXT
 
     txtDesc.text = desc

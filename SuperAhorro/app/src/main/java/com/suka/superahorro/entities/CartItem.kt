@@ -7,6 +7,11 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "cart_items")
 class CartItem (name : String) {
 
+    fun getTotalPrice() : Float? {
+        if ( unit_price == null || amount == null ) return null
+        return unit_price!! * amount!!
+    }
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var id: Long = 0
@@ -23,8 +28,6 @@ class CartItem (name : String) {
     @ColumnInfo(name = "picture")
     var picture: String? = null
 
-    @ColumnInfo(name = "total_price")
-    var total_prince: Float? = null
 
     @ColumnInfo(name = "brand")
     var brand: String? = null

@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 import com.suka.superahorro.entities.CartItem
 import com.suka.superahorro.entities.User
 
-@Database(entities = [CartItem::class, User::class], version = 4, exportSchema = false)
+@Database(entities = [CartItem::class, User::class], version = 5, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun cartItemDao(): CartItemDao

@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Aceite de Oliva",
+    "brand": "La Española",
+    "price": 3.99,
+    "amount": 1,
+    "picture": "https://d2r9epyceweg5n.cloudfront.net/stores/097/859/products/aceite-oliva-ganapati-cuarto-vidrio1-06f931be4d7ebc183916245369334686-640-0.jpg"
+  },
+  {
+    "name": "Manteca",
+    "brand": "La Serenisima",
+    "price": 4.99,
+    "amount": 2,
+    "picture": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8_hE-9MiXK_uR236Vc6UIy7ciEQCAe0Bgax8XWGXcFaHs9j7DkBdkxq9eXoCfqDSyTU0&usqp=CAU"
+  },
+  {
+    "name": "Leche",
+    "brand": "La Serenisima",
+    "price": 3.99,
+    "amount": 1,
+    "picture": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVKwDNHAa1mdoPK_j3AqBcN1l7ZdcYPUc9D8p8aYmImb6zdCI_wn57vsr8jq7aRQZGD6Q&usqp=CAU"
+  }
+]
